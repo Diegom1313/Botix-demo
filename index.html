@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Botix: demostración</title>
+<meta name="description" content="Prueba un asistente de Botix que responde preguntas y reserva citas en una barbería ficticia.">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<main class="pagina">
+  <section class="texto">
+    <p class="marca">Botix</p>
+    <h1>Un asistente que atiende a tus clientes y reserva sus citas</h1>
+    <p>Escríbele como lo harías por WhatsApp: pregunta el precio de un corte, el horario o pide una cita. Entiende frases con faltas de ortografía.</p>
+    <ul class="ideas">
+      <li>¿Cuánto cuesta un corte?</li>
+      <li>¿A qué hora abrís el sábado?</li>
+      <li>Quiero cita para arreglarme la barba</li>
+    </ul>
+    <p class="aviso">Demostración con un negocio ficticio. Funciona solo en tu navegador: no guarda ni envía lo que escribas, y no crea citas reales. El producto completo añade panel de gestión, WhatsApp, Telegram e Instagram.</p>
+  </section>
+  <section class="chat" aria-label="Chat de demostración">
+    <header><span class="avatar" aria-hidden="true">N</span><div><b>Barbería La Navaja</b><small>Asistente virtual</small></div><button id="reiniciar" type="button">Reiniciar</button></header>
+    <div id="mensajes" class="mensajes" role="log" aria-live="polite"></div>
+    <div id="opciones" class="opciones"></div>
+    <form id="formulario"><label class="oculto" for="entrada">Escribe tu mensaje</label><input id="entrada" autocomplete="off" maxlength="300" placeholder="Escribe tu mensaje"><button>Enviar</button></form>
+  </section>
+</main>
+<script src="demo.js"></script>
+</body>
+</html>
