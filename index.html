@@ -2,31 +2,403 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Botix: demostración</title>
-<meta name="description" content="Prueba un asistente de Botix que responde preguntas y reserva citas en una barbería ficticia.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Botix · Asistente de citas, webs y SEO para tu negocio</title>
+<meta name="description" content="Botix atiende tu WhatsApp, Instagram, Telegram y tu web, reserva citas 24 h, te hace la web y te dice cómo te ve Google. Pregúntale a Bix, nuestro asistente.">
+<link rel="canonical" href="https://diegom1313.github.io/botix-demo/">
+<meta name="theme-color" content="#05090a">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Botix">
+<meta property="og:title" content="Botix · Tu negocio, despierto a las tres de la mañana">
+<meta property="og:description" content="Asistente de citas por WhatsApp y web, webs profesionales y auditoría SEO gratis. Pregúntale a Bix.">
+<meta property="og:url" content="https://diegom1313.github.io/botix-demo/">
+<meta property="og:image" content="https://diegom1313.github.io/botix-demo/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Botix: las citas entran solas">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2305090a'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%23ffb340'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
 <link rel="stylesheet" href="estilos.css">
+<script>document.documentElement.classList.add('js')</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://diegom1313.github.io/botix-demo/#botix",
+      "name": "Botix",
+      "url": "https://diegom1313.github.io/botix-demo/"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Botix",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "es",
+      "description": "Asistente que atiende WhatsApp, Instagram, Telegram y la web de un negocio, reserva citas, envía recordatorios y pasa a una persona lo que no sabe.",
+      "publisher": { "@id": "https://diegom1313.github.io/botix-demo/#botix" },
+      "offers": [
+        { "@type": "Offer", "name": "Alta del asistente", "price": "299", "priceCurrency": "EUR" },
+        { "@type": "Offer", "name": "Mantenimiento del asistente", "priceCurrency": "EUR",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "29", "priceCurrency": "EUR", "unitCode": "MON", "valueAddedTaxIncluded": false } },
+        { "@type": "Offer", "name": "Web: diseño y puesta en marcha", "price": "99", "priceCurrency": "EUR" },
+        { "@type": "Offer", "name": "Web: alojamiento y mantenimiento", "priceCurrency": "EUR",
+          "priceSpecification": { "@type": "UnitPriceSpecification", "price": "15", "priceCurrency": "EUR", "unitCode": "MON", "valueAddedTaxIncluded": false } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
-<main class="pagina">
-  <section class="texto">
-    <p class="marca">Botix</p>
-    <h1>Un asistente que atiende a tus clientes y reserva sus citas</h1>
-    <p>Escríbele como lo harías por WhatsApp: pregunta el precio de un corte, el horario o pide una cita. Entiende frases con faltas de ortografía.</p>
-    <ul class="ideas">
-      <li>¿Cuánto cuesta un corte?</li>
-      <li>¿A qué hora abrís el sábado?</li>
-      <li>Quiero cita para arreglarme la barba</li>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<!-- ───────────── HÉROE ───────────── -->
+<header class="heroe" id="inicio">
+  <div class="heroe__plato" aria-hidden="true">
+    <canvas class="heroe__lienzo"></canvas>
+  </div>
+
+  <nav class="nav appear appear--down" style="--d:.05s" aria-label="Principal">
+    <a class="marca liquid-glass" href="#inicio" aria-label="Botix, inicio"><span class="marca__luz" aria-hidden="true"></span>Botix</a>
+    <div class="nav__enlaces liquid-glass">
+      <a href="#servicios">Servicios</a>
+      <a href="#como">Cómo funciona</a>
+      <a href="#precios">Precios</a>
+      <a href="#preguntas">Preguntas</a>
+    </div>
+    <button class="btn btn--claro nav__cta" type="button" data-abrir-bix>Hablar con Bix</button>
+  </nav>
+
+  <div class="heroe__cuerpo" id="contenido">
+    <p class="insignia liquid-glass appear appear--pop" style="--d:.22s"><span class="insignia__chip">Nuevo</span>Ahora también te hacemos la web</p>
+    <h1 class="heroe__titulo">
+      <span class="linea appear appear--mask" style="--d:.38s">Tu negocio, <em>despierto</em></span>
+      <span class="linea appear appear--mask" style="--d:.54s">a las tres de la mañana.</span>
+    </h1>
+    <p class="heroe__entrada appear appear--soft" style="--d:.74s">Botix contesta tu WhatsApp, Instagram, Telegram y tu web, da citas de verdad y te pasa lo que no sabe. Además te monta la web y te dice cómo te ve Google.</p>
+
+    <form class="pregunta liquid-glass liquid-glass--fuerte appear appear--btn" style="--d:.9s" id="pregunta-heroe">
+      <label class="sr-only" for="pregunta-texto">Pregúntale a Bix</label>
+      <span class="pregunta__luz" aria-hidden="true"></span>
+      <input id="pregunta-texto" autocomplete="off" maxlength="200" placeholder="Pregúntale a Bix: ¿cuánto cuesta?">
+      <button class="btn btn--ambar pregunta__enviar" aria-label="Preguntar a Bix">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+    <ul class="sugerencias appear appear--soft" style="--d:1.02s" aria-label="Preguntas de ejemplo">
+      <li><button type="button" data-preguntar="¿Qué hace exactamente Botix?">¿Qué hace exactamente?</button></li>
+      <li><button type="button" data-preguntar="¿Funciona con mi WhatsApp?">¿Con mi WhatsApp?</button></li>
+      <li><button type="button" data-preguntar="Enséñame cómo reserva una cita">Enséñame una reserva</button></li>
     </ul>
-    <p class="aviso">Demostración con un negocio ficticio. Funciona solo en tu navegador: no guarda ni envía lo que escribas, y no crea citas reales. El producto completo añade panel de gestión, WhatsApp, Telegram e Instagram.</p>
+  </div>
+
+  <dl class="cifras appear appear--soft" style="--d:1.14s">
+    <div><dt>24 h</dt><dd>365 días, también de madrugada</dd></div>
+    <div><dt>4</dt><dd>canales: WhatsApp, Instagram, Telegram y web</dd></div>
+    <div><dt>11</dt><dd>sectores con su oficio ya aprendido</dd></div>
+    <div><dt>10 min</dt><dd>desde que contratas hasta que contesta</dd></div>
+  </dl>
+</header>
+
+<main>
+  <!-- ───────────── CINTA ───────────── -->
+  <div class="cinta" aria-hidden="true">
+    <div class="cinta__pista">
+      <span>WhatsApp</span><i></i><span>Instagram</span><i></i><span>Telegram</span><i></i><span>Tu web</span><i></i>
+      <span>WhatsApp</span><i></i><span>Instagram</span><i></i><span>Telegram</span><i></i><span>Tu web</span><i></i>
+    </div>
+  </div>
+
+  <!-- ───────────── SERVICIOS ───────────── -->
+  <section class="servicios" id="servicios" aria-labelledby="servicios-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Lo que vendemos</p>
+      <h2 id="servicios-titulo">Cuatro piezas.<br> <em>Un negocio</em> que no se para.</h2>
+      <p class="cabecera__texto">Puedes empezar por una y sumar las demás cuando quieras. Todas se manejan desde el mismo panel.</p>
+    </div>
+
+    <div class="pila">
+      <!-- 01 · ASISTENTE -->
+      <div class="pila__hueco">
+        <article class="tarjeta" style="--i:0">
+          <div class="tarjeta__texto">
+            <p class="tarjeta__num"><span>01</span> Asistente de citas</p>
+            <h3>Contesta, reserva <em>y recuerda</em>.</h3>
+            <p>Conoce tu horario, tus servicios y quién está libre. No promete huecos que no existen ni cuela a dos personas a la misma hora. La tarde antes avisa al cliente y le deja cambiar o anular su cita él mismo.</p>
+            <ul class="lista">
+              <li>WhatsApp oficial, Instagram, Telegram y chat para tu web</li>
+              <li>Lo que no sabe, te lo pasa: lees, contestas y se lo devuelves</li>
+              <li>Panel con agenda, clientes y conversaciones</li>
+            </ul>
+            <p class="tarjeta__precio"><b>299 €</b> el alta · <b>29 €/mes</b> <span>sin IVA · sin permanencia</span></p>
+            <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="Enséñame cómo reserva una cita">Ver una reserva en vivo</button>
+          </div>
+          <div class="maqueta maqueta--chat" aria-label="Ejemplo de conversación de madrugada que acaba en cita" role="img">
+            <div class="chatm__cab"><span class="chatm__av">B</span><div><b>Barbería La Navaja</b><small>Bruno · asistente virtual</small></div><span class="chatm__hora">03:14</span></div>
+            <p class="burbuja burbuja--cli">Buenas, ¿tenéis hueco mañana para corte y barba?</p>
+            <p class="burbuja burbuja--bot">¡Claro! Mañana tengo libre a las 10:30, 12:00 o 17:30. ¿Cuál te viene mejor?</p>
+            <p class="burbuja burbuja--cli">17:30 porfa. Soy Sergio</p>
+            <p class="burbuja burbuja--bot">Hecho, Sergio. Mañana a las 17:30, corte + barba, 22 €. Te escribo la tarde antes para recordártelo.</p>
+            <p class="chatm__aviso"><span></span>Nueva cita en la agenda · 17:30</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- 02 · WEB -->
+      <div class="pila__hueco">
+        <article class="tarjeta" style="--i:1">
+          <div class="tarjeta__texto">
+            <p class="tarjeta__num"><span>02</span> Tu web profesional</p>
+            <h3>Una web que <em>vende</em>, no que decora.</h3>
+            <p>Miramos tu web actual y hasta cinco de tu competencia, y escribimos los textos con lo que te falta para ganarles. La alojamos con HTTPS, con tu chat dentro y el botón «Pide tu cita» a la vista.</p>
+            <ul class="lista">
+              <li>Tres diseños: Cristal, Nítida y Escaparate, con tu color</li>
+              <li>Hasta 14 fotos, dominio propio y estadísticas de visitas</li>
+              <li>Lista para Google: datos de tu negocio, mapa del sitio y avisos legales</li>
+            </ul>
+            <p class="tarjeta__precio"><b>99 €</b> diseño y puesta en marcha · <b>15 €/mes</b> <span>alojamiento y mantenimiento</span></p>
+            <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="¿Qué incluye la web y cuánto cuesta?">Qué incluye la web</button>
+          </div>
+          <div class="maqueta maqueta--web" aria-label="Ejemplo de web de una peluquería hecha con Botix" role="img">
+            <div class="navegador"><i></i><i></i><i></i><span>peluqueria-aurora.es</span></div>
+            <div class="webm">
+              <div class="webm__heroe">
+                <p class="webm__marca">Peluquería Aurora</p>
+                <p class="webm__titulo">Cortes y color en el centro de <em>Valencia</em></p>
+                <span class="webm__boton">Pide tu cita</span>
+              </div>
+              <div class="webm__servicios">
+                <span><b>Corte</b> 18 €</span><span><b>Color</b> 45 €</span><span><b>Peinado</b> 25 €</span>
+              </div>
+              <div class="webm__datos">
+                <span>Visitas este mes <b>1.284</b></span><span>Pulsan «Pide tu cita» <b>96</b></span>
+              </div>
+            </div>
+            <span class="webm__chat" aria-hidden="true"></span>
+          </div>
+        </article>
+      </div>
+
+      <!-- 03 · AUDITORÍA -->
+      <div class="pila__hueco">
+        <article class="tarjeta" style="--i:2">
+          <div class="tarjeta__texto">
+            <p class="tarjeta__num"><span>03</span> Auditoría SEO y SEM</p>
+            <h3>Cómo te ve Google, <em>gratis</em>.</h3>
+            <p>Más de 35 comprobaciones en ocho áreas, las mismas que mira un consultor, explicadas sin tecnicismos. Te llega un PDF con tu nota y lo que conviene arreglar, empezando por lo que más clientes te cuesta.</p>
+            <ul class="lista">
+              <li>Velocidad en el móvil medida por Google</li>
+              <li>Si un cliente cercano te encuentra: teléfono, mapa, dirección</li>
+              <li>Si tu web está lista para anuncios y cookies</li>
+            </ul>
+            <p class="tarjeta__precio"><b>Gratis</b> <span>informe en PDF en un minuto</span></p>
+            <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="¿Qué revisa la auditoría SEO gratis?">Qué revisa la auditoría</button>
+          </div>
+          <div class="maqueta maqueta--seo" aria-label="Ejemplo de informe de auditoría con nota 82 sobre 100" role="img">
+            <div class="seom__nota">
+              <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="seom__pista"/><circle cx="60" cy="60" r="52" class="seom__arco"/></svg>
+              <p><b>82</b><span>/100</span></p>
+            </div>
+            <ul class="seom__areas">
+              <li><span>Base técnica</span><i style="--v:.9"></i></li>
+              <li><span>Contenido y etiquetas</span><i style="--v:.85"></i></li>
+              <li><span>Velocidad en móvil</span><i style="--v:.62"></i></li>
+              <li><span>SEO local</span><i style="--v:.95"></i></li>
+              <li><span>Datos estructurados</span><i style="--v:.7"></i></li>
+              <li><span>Lista para anuncios</span><i style="--v:.55"></i></li>
+            </ul>
+            <p class="seom__pdf">informe-tu-web.pdf <span>listo</span></p>
+          </div>
+        </article>
+      </div>
+
+      <!-- 04 · COBROS -->
+      <div class="pila__hueco">
+        <article class="tarjeta" style="--i:3">
+          <div class="tarjeta__texto">
+            <p class="tarjeta__num"><span>04</span> Cobros y facturación</p>
+            <h3>La señal, cobrada <em>antes de venir</em>.</h3>
+            <p>Si quieres, tu asistente pide una señal o el precio completo al reservar, con tu propia cuenta de Stripe: el dinero va directo a ti. Lo que cobras en el local lo apuntas en un toque, y tus facturas están siempre en el panel.</p>
+            <ul class="lista">
+              <li>El importe lo calcula el servidor: nadie lo puede trucar</li>
+              <li>Un pago solo cuenta si Stripe lo confirma</li>
+              <li>Exportación para tu gestoría en un clic</li>
+            </ul>
+            <p class="tarjeta__precio"><b>Incluido</b> <span>en el asistente · Stripe cobra su comisión aparte</span></p>
+            <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="¿Cómo funciona el cobro de citas?">Cómo se cobra</button>
+          </div>
+          <div class="maqueta maqueta--cobro" aria-label="Ejemplo de cita con señal pagada y factura" role="img">
+            <div class="cobrom__cita">
+              <p class="cobrom__eti">Cita confirmada</p>
+              <p class="cobrom__serv">Limpieza dental</p>
+              <p class="cobrom__meta">Clínica Dental Sonrisa · jueves 12:30</p>
+              <div class="cobrom__linea"><span>Precio</span><b>45,00 €</b></div>
+              <div class="cobrom__linea"><span>Señal del 30 %</span><b class="ok">13,50 € pagado</b></div>
+              <div class="cobrom__linea"><span>En el local</span><b>31,50 €</b></div>
+            </div>
+            <div class="cobrom__fact"><span>BTX-0042</span><span>Pagada</span><span class="cobrom__pdf">PDF</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
   </section>
-  <section class="chat" aria-label="Chat de demostración">
-    <header><span class="avatar" aria-hidden="true">N</span><div><b>Barbería La Navaja</b><small>Asistente virtual</small></div><button id="reiniciar" type="button">Reiniciar</button></header>
-    <div id="mensajes" class="mensajes" role="log" aria-live="polite"></div>
-    <div id="opciones" class="opciones"></div>
-    <form id="formulario"><label class="oculto" for="entrada">Escribe tu mensaje</label><input id="entrada" autocomplete="off" maxlength="300" placeholder="Escribe tu mensaje"><button>Enviar</button></form>
+
+  <!-- ───────────── AL MANDO ───────────── -->
+  <section class="mando" aria-labelledby="mando-titulo">
+    <p class="rotulo" data-reveal>// Tú sigues al mando</p>
+    <h2 id="mando-titulo" class="sr-only">Tú sigues al mando</h2>
+    <p class="manifiesto" data-manifiesto>No se inventa nada. Contesta con tus servicios, tus precios y tus preguntas frecuentes. Si algo no está ahí, avisa al cliente de que le contestará una persona y te lo pasa marcado. Lees la conversación entera, contestas tú y, cuando acabas, se la devuelves.</p>
+  </section>
+
+  <!-- ───────────── SECTORES ───────────── -->
+  <section class="sectores" aria-labelledby="sectores-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Para tu negocio</p>
+      <h2 id="sectores-titulo">Llega sabiendo <em>de lo tuyo</em>.</h2>
+      <p class="cabecera__texto">Eliges tu sector y viene con los servicios, los precios orientativos, el horario típico y las preguntas de tu oficio ya puestos. Lo ajustas en dos minutos.</p>
+    </div>
+    <ul class="sectores__lista" data-stagger="60">
+      <li data-reveal><b>Clínica dental</b><span>Sofía</span></li>
+      <li data-reveal><b>Peluquería y estética</b><span>Carla</span></li>
+      <li data-reveal><b>Barbería</b><span>Bruno</span></li>
+      <li data-reveal><b>Fisioterapia y salud</b><span>Marta</span></li>
+      <li data-reveal><b>Taller mecánico</b><span>Dani</span></li>
+      <li data-reveal><b>Restaurante</b><span>Leo</span></li>
+      <li data-reveal><b>Gimnasio</b><span>Alex</span></li>
+      <li data-reveal><b>Inmobiliaria</b><span>Nuria</span></li>
+      <li data-reveal><b>Clínica veterinaria</b><span>Lucas</span></li>
+      <li data-reveal><b>Asesoría y despacho</b><span>Elena</span></li>
+      <li data-reveal><b>Cualquier otro negocio</b><span>a tu medida</span></li>
+    </ul>
+  </section>
+
+  <!-- ───────────── CÓMO FUNCIONA ───────────── -->
+  <section class="como" id="como" aria-labelledby="como-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Cómo se pone en marcha</p>
+      <h2 id="como-titulo">Hoy lo montas.<br> <em>Hoy contesta.</em></h2>
+    </div>
+    <ol class="pasos" data-stagger="120">
+      <li data-reveal><span class="pasos__n">01</span><h3>Cuéntanos de tu negocio</h3><p>Eliges tu sector y nos das cuatro datos: cómo te llamas, dónde estás y tu correo. Menos de un minuto.</p></li>
+      <li data-reveal><span class="pasos__n">02</span><h3>Contratas, sin permanencia</h3><p>Pagas el alta y la primera cuota con tarjeta, por Stripe. La factura con IVA te llega al momento.</p></li>
+      <li data-reveal><span class="pasos__n">03</span><h3>Ya está atendiendo</h3><p>Recibes tu acceso con el asistente montado y una línea de código para ponerlo en tu web.</p></li>
+    </ol>
+  </section>
+
+  <!-- ───────────── PRECIOS ───────────── -->
+  <section class="precios" id="precios" aria-labelledby="precios-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Precio claro</p>
+      <h2 id="precios-titulo">Un alta para montarlo. <em>Una cuota</em> para que no se apague.</h2>
+    </div>
+    <div class="planes" data-stagger="120">
+      <article class="plan plan--destacado" data-reveal>
+        <p class="plan__eti">Asistente de citas</p>
+        <p class="plan__precio"><b>29 €</b><span>/mes</span></p>
+        <p class="plan__alta">+ 299 € de alta, una sola vez</p>
+        <ul>
+          <li>Configurado para tu sector, con tu nombre y tus colores</li>
+          <li>WhatsApp, Instagram, Telegram y chat web</li>
+          <li>Agenda, clientes, conversaciones y recordatorios</li>
+          <li>Servidor en la UE y copia de seguridad diaria</li>
+          <li>Soporte por correo de una persona</li>
+        </ul>
+        <button class="btn btn--ambar" type="button" data-preguntar="Quiero contratar el asistente">Quiero el mío</button>
+      </article>
+      <article class="plan" data-reveal>
+        <p class="plan__eti">Web profesional</p>
+        <p class="plan__precio"><b>15 €</b><span>/mes</span></p>
+        <p class="plan__alta">+ 99 € de diseño y puesta en marcha</p>
+        <ul>
+          <li>Análisis de tu competencia y textos a medida</li>
+          <li>Alojamiento con HTTPS y tu chat dentro</li>
+          <li>Dominio propio: 19 € una vez</li>
+          <li>Traslado desde tu web anterior: 29 € una vez</li>
+          <li>Página propia por servicio: 9 € cada una</li>
+        </ul>
+        <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="¿Qué incluye la web y cuánto cuesta?">Preguntar por la web</button>
+      </article>
+      <article class="plan" data-reveal>
+        <p class="plan__eti">Auditoría SEO y SEM</p>
+        <p class="plan__precio"><b>0 €</b><span>siempre</span></p>
+        <p class="plan__alta">Informe en PDF en un minuto</p>
+        <ul>
+          <li>Más de 35 comprobaciones en 8 áreas</li>
+          <li>Velocidad en móvil medida por Google</li>
+          <li>Ordenado por lo que más te cuesta</li>
+          <li>Sin tecnicismos y sin compromiso</li>
+        </ul>
+        <button class="btn btn--vidrio liquid-glass" type="button" data-preguntar="¿Qué revisa la auditoría SEO gratis?">Cómo funciona</button>
+      </article>
+    </div>
+    <p class="precios__nota" data-reveal>Precios sin IVA. Te das de baja desde tu panel cuando quieras y sigue funcionando hasta el final del mes pagado.</p>
+  </section>
+
+  <!-- ───────────── PREGUNTAS ───────────── -->
+  <section class="preguntas" id="preguntas" aria-labelledby="preguntas-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Antes de empezar</p>
+      <h2 id="preguntas-titulo">Lo que nos <em>preguntan</em>.</h2>
+      <p class="cabecera__texto">¿No está la tuya? Pregúntale a Bix: se sabe Botix de memoria.</p>
+    </div>
+    <div class="acordeon" data-stagger="80">
+      <details data-reveal><summary>¿Tengo que saber de informática?</summary><p>No. Eliges tu sector, pones el nombre de tu negocio y el asistente llega montado. Cambiar un precio o un horario es como rellenar un formulario, desde el navegador o el móvil.</p></details>
+      <details data-reveal><summary>¿Funciona con mi WhatsApp de siempre?</summary><p>Funciona con la API oficial de WhatsApp Business, que es la que permite que un asistente conteste por ti. Necesitas una cuenta de empresa en Meta y un número que no esté usando la aplicación normal de WhatsApp. Te guiamos paso a paso.</p></details>
+      <details data-reveal><summary>¿Es inteligencia artificial? ¿Se puede inventar cosas?</summary><p>Contesta a partir de lo que tú le cuentas. Si no lo sabe, no se lo inventa: avisa de que contestará una persona y te pasa la conversación. Siempre se presenta como asistente virtual.</p></details>
+      <details data-reveal><summary>¿Hay permanencia?</summary><p>No. Te das de baja desde tu panel, en Ajustes → Suscripción, sin llamar a nadie. Sigue funcionando hasta el final del mes pagado.</p></details>
+      <details data-reveal><summary>¿Qué pasa con los datos de mis clientes?</summary><p>Son tuyos. Se guardan en servidores de la Unión Europea, con copia diaria y conexión cifrada. Firmamos el contrato de encargo de tratamiento del RGPD y, si te vas, te los llevas en una hoja de cálculo.</p></details>
+      <details data-reveal><summary>¿Necesito tener página web?</summary><p>No. Puede atender solo por WhatsApp, Instagram o Telegram, y te damos una página propia con tu chat. Y si quieres una web de verdad, también te la hacemos.</p></details>
+    </div>
+  </section>
+
+  <!-- ───────────── LLAMADA FINAL ───────────── -->
+  <section class="final" aria-labelledby="final-titulo">
+    <div class="final__plato" aria-hidden="true">
+      <div class="puerta"></div>
+      <div class="niebla"></div>
+    </div>
+    <div class="final__cuerpo" data-reveal>
+      <p class="rotulo">// ¿Cuántas citas se te escaparon la semana pasada?</p>
+      <h2 id="final-titulo">La próxima entra <em>sola</em>.</h2>
+      <button class="btn btn--ambar btn--grande" type="button" data-abrir-bix>Hablar con Bix</button>
+    </div>
   </section>
 </main>
-<script src="demo.js"></script>
+
+<footer class="pie">
+  <p class="pie__marca"><span class="marca__luz" aria-hidden="true"></span>Botix</p>
+  <p>El asistente que atiende tu negocio mientras tú atiendes a tus clientes.</p>
+  <p class="pie__legal">Demostración pública de Botix. Bix funciona solo en tu navegador: no guarda ni envía lo que escribes. Los ejemplos de negocios son ficticios. Precios sin IVA. © 2026 Botix.</p>
+</footer>
+
+<!-- ───────────── BIX ───────────── -->
+<button class="lanzador liquid-glass liquid-glass--fuerte" type="button" id="bix-lanzador" aria-controls="bix" aria-expanded="false">
+  <span class="lanzador__orbe" aria-hidden="true"></span>Pregúntale a Bix
+</button>
+
+<section class="bix" id="bix" role="dialog" aria-modal="false" aria-labelledby="bix-nombre" hidden>
+  <header class="bix__cab">
+    <span class="bix__orbe" aria-hidden="true"></span>
+    <div><b id="bix-nombre">Bix</b><small><span class="bix__punto" aria-hidden="true"></span>Asistente de Botix · siempre despierto</small></div>
+    <button class="bix__icono" type="button" id="bix-reiniciar" aria-label="Empezar de nuevo"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="bix__icono" type="button" id="bix-cerrar" aria-label="Cerrar el chat"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </header>
+  <div class="bix__mensajes" id="bix-mensajes" role="log" aria-live="polite"></div>
+  <div class="bix__opciones" id="bix-opciones"></div>
+  <form class="bix__form" id="bix-form">
+    <label class="sr-only" for="bix-entrada">Escribe tu pregunta</label>
+    <input id="bix-entrada" autocomplete="off" maxlength="300" placeholder="Escribe tu pregunta">
+    <button class="btn btn--ambar" aria-label="Enviar"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </form>
+</section>
+
+<script src="web.js" defer></script>
+<script src="bix.js" defer></script>
 </body>
 </html>
