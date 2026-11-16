@@ -165,7 +165,7 @@
   // ── La firma: el campo del héroe cambia de pregunta de ejemplo
   const campo = document.getElementById('pregunta-texto');
   const ejemplos = [
-    'Pregúntale a Bix: ¿cuánto cuesta?',
+    'Pregúntale a Botix: ¿cuánto cuesta?',
     '¿Funciona con WhatsApp?',
     '¿Me hacéis la web?',
     '¿Hay permanencia?',
@@ -180,25 +180,25 @@
     }, 3200);
   }
 
-  // ── El botón flotante de Bix sobra mientras se ve el héroe, que ya tiene su campo
-  const lanzador = document.getElementById('bix-lanzador');
+  // ── El botón flotante de Botix sobra mientras se ve el héroe, que ya tiene su campo
+  const lanzador = document.getElementById('botix-lanzador');
   const heroe = document.querySelector('.heroe');
   if (lanzador && heroe) {
     lanzador.classList.add('oculto');
     new IntersectionObserver(([e]) => lanzador.classList.toggle('oculto', e.isIntersecting), { threshold: 0.35 }).observe(heroe);
   }
 
-  // ── Todo lo que abre a Bix
-  const conBix = (fn) => { if (window.Bix) fn(window.Bix); };
+  // ── Todo lo que abre a Botix
+  const conBotix = (fn) => { if (window.Botix) fn(window.Botix); };
   document.getElementById('pregunta-heroe')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const t = campo.value.trim();
     campo.value = '';
-    conBix((b) => (t ? b.preguntar(t) : b.abrir()));
+    conBotix((b) => (t ? b.preguntar(t) : b.abrir()));
   });
   document.addEventListener('click', (e) => {
     const p = e.target.closest('[data-preguntar]');
-    if (p) { conBix((b) => b.preguntar(p.dataset.preguntar)); return; }
-    if (e.target.closest('[data-abrir-bix]')) conBix((b) => b.abrir());
+    if (p) { conBotix((b) => b.preguntar(p.dataset.preguntar)); return; }
+    if (e.target.closest('[data-abrir-botix]')) conBotix((b) => b.abrir());
   });
 })();

@@ -1,5 +1,5 @@
 // Los cuatro canales en directo: un mensaje entra por su canal, viaja por su haz
-// hasta Bix, Bix lo contesta y cae en la bandeja (AnimatedList de React Bits,
+// hasta Botix, Botix lo contesta y cae en la bandeja (AnimatedList de React Bits,
 // en JavaScript sin dependencias). Sin movimiento, la bandeja queda como en el HTML.
 (() => {
   const hub = document.querySelector('[data-hub]');
