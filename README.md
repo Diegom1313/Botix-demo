@@ -7,6 +7,9 @@ Web pública de [Botix](https://diegom1313.github.io/botix-demo/), con todo lo q
 - `index.html`, `estilos.css`, `web.js`: la web (servicios, sectores, precios, preguntas).
 - `efectos.js`: los efectos de la página (orbe de luz del héroe, titulares, focos, chispas), adaptados de [React Bits](https://reactbits.dev) a JavaScript sin dependencias.
 - `maquetas.js`: las maquetas de producto en movimiento (la conversación, la web, la auditoría y el cobro).
+- `canales.js`: los cuatro canales en directo: los mensajes viajan hasta Bix y caen contestados en la bandeja.
+
+Al cambiar CSS o JS, sube el número `?v=` de sus enlaces en `index.html` para que nadie vea la versión guardada en caché.
 - `bix.js`: Bix, el asistente. Responde sobre el asistente de citas, los canales, las webs, la auditoría SEO, los cobros, los precios, la privacidad y la baja, y puede simular cómo reserva una cita el asistente de una barbería ficticia.
 - `og.png`: la imagen que sale al compartir el enlace.
 

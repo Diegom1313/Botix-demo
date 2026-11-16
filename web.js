@@ -10,7 +10,7 @@
   const pastilla = document.querySelector('.nav__pastilla');
   const botonMenu = document.getElementById('nav-menu');
   const secciones = enlaces.map((a) => document.querySelector(a.getAttribute('href')));
-  let yAntes = Math.max(0, scrollY), tramo = 0, activo = null, encima = null;
+  let yAntes = Math.max(0, scrollY), bajado = 0, activo = null, encima = null;
   const colocar = () => {
     const a = encima || activo;
     pastilla.classList.toggle('ver', !!a);
@@ -28,12 +28,10 @@
     const dy = y - yAntes; yAntes = y;
     barra.classList.toggle('compacta', y > 40);
     barra.style.setProperty('--p', Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4));
-    if (y < 140 || barra.classList.contains('abierta') || barra.contains(document.activeElement)) { barra.classList.remove('oculta'); tramo = 0; }
-    else if (dy) {
-      tramo = Math.sign(dy) === Math.sign(tramo) ? tramo + dy : dy;
-      if (tramo > 56) barra.classList.add('oculta');
-      else if (tramo < -10) barra.classList.remove('oculta');
-    }
+    // Al bajar se esconde; al subir, aunque sea un poco y estés donde estés, vuelve.
+    if (y < 120 || barra.classList.contains('abierta') || barra.contains(document.activeElement)) { barra.classList.remove('oculta'); bajado = 0; }
+    else if (dy > 0) { bajado += dy; if (bajado > 48) barra.classList.add('oculta'); }
+    else if (dy < -2) { bajado = 0; barra.classList.remove('oculta'); }
     let nuevo = null;
     secciones.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.45) nuevo = enlaces[i]; });
     const ultima = secciones[secciones.length - 1];
@@ -59,6 +57,37 @@
     addEventListener('resize', () => { menu(); colocar(); });
     document.fonts?.ready.then(colocar);
     menu();
+    vidrioLiquido(document.querySelector('.nav'));
+  }
+
+  // ── Cristal líquido (GlassSurface de React Bits): el mapa de desplazamiento
+  // se dibuja a la medida del menú y el filtro SVG refracta lo que hay detrás.
+  // Solo Chromium lo aplica a backdrop-filter; los demás se quedan con el esmerilado.
+  function vidrioLiquido(nav) {
+    const mapa = document.getElementById('vidrio-mapa');
+    const ua = navigator.userAgent;
+    const chromium = /Chrome\//.test(ua) && !/Firefox|FxiOS|EdgiOS|CriOS/.test(ua) && !(/Safari/.test(ua) && !/Chrome/.test(ua));
+    const prueba = document.createElement('div');
+    prueba.style.backdropFilter = 'url(#vidrio)';
+    if (!nav || !mapa || !chromium || !prueba.style.backdropFilter) return;
+    const dibujar = () => {
+      const r = nav.getBoundingClientRect();
+      const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+      const radio = h / 2, borde = Math.min(w, h) * 0.06;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">`
+        + '<defs><linearGradient id="r" x1="100%" y1="0%" x2="0%" y2="0%"><stop offset="0%" stop-color="#0000"/><stop offset="100%" stop-color="red"/></linearGradient>'
+        + '<linearGradient id="b" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0000"/><stop offset="100%" stop-color="blue"/></linearGradient>'
+        + `<filter id="s" filterUnits="userSpaceOnUse" x="0" y="0" width="${w}" height="${h}"><feGaussianBlur stdDeviation="9"/></filter></defs>`
+        + `<rect width="${w}" height="${h}" fill="black"/>`
+        + `<rect width="${w}" height="${h}" rx="${radio}" fill="url(#r)"/>`
+        + `<rect width="${w}" height="${h}" rx="${radio}" fill="url(#b)" style="mix-blend-mode:difference"/>`
+        + `<rect x="${borde}" y="${borde}" width="${w - borde * 2}" height="${h - borde * 2}" rx="${radio - borde}" fill="hsl(0 0% 50% / .93)" filter="url(#s)"/></svg>`;
+      mapa.setAttribute('href', `data:image/svg+xml,${encodeURIComponent(svg)}`);
+    };
+    let pendiente = 0;
+    new ResizeObserver(() => { cancelAnimationFrame(pendiente); pendiente = requestAnimationFrame(dibujar); }).observe(nav);
+    dibujar();
+    nav.classList.add('liquido');
   }
 
   // ── Entradas del héroe a prueba de fallos

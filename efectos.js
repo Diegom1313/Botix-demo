@@ -1,6 +1,6 @@
 // Efectos de la página, adaptados de React Bits (reactbits.dev) a JavaScript
 // sin dependencias: Orb, SplitText/BlurText, DecryptedText, CountUp,
-// SpotlightCard, TiltedCard, Magnet, ClickSpark y ScrollVelocity.
+// SpotlightCard, TiltedCard, Magnet y ClickSpark.
 // Todo respeta «reducir movimiento» y, si algo falla, el contenido se ve igual.
 (() => {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -357,27 +357,6 @@ void main() {
       for (let i = 0; i < 8; i++) chispas.push({ x: ev.clientX, y: ev.clientY, a: (i / 8) * Math.PI * 2, t0, cian: i % 2 });
       if (!raf) raf = requestAnimationFrame(pinta);
     }, { passive: true });
-  }
-
-  // ───────────── ScrollVelocity: la cinta corre más cuanto más rápido bajas
-  const pista = document.querySelector('.cinta__pista');
-  if (pista && !quieto) {
-    pista.style.animation = 'none';
-    let x = 0, v = 0, yAntes = scrollY, antes = 0, visible = true, sentido = 1;
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(pista.parentElement);
-    const paso = (t) => {
-      const dt = antes ? Math.min(0.05, (t - antes) / 1000) : 0; antes = t;
-      const dy = scrollY - yAntes; yAntes = scrollY;
-      if (visible && dt) {
-        if (Math.abs(dy) > 1) sentido = dy > 0 ? 1 : -1;
-        v += ((dy / dt) * 0.45 - v) * Math.min(1, dt * 8);
-        const mitad = pista.scrollWidth / 2;
-        x = (((x - (46 * sentido + v) * dt) % mitad) - mitad) % mitad;
-        pista.style.transform = `translate3d(${x.toFixed(1)}px,0,0) skewX(${lim(-v / 90, -9, 9).toFixed(2)}deg)`;
-      }
-      requestAnimationFrame(paso);
-    };
-    requestAnimationFrame(paso);
   }
 
   window.Efectos = { contar, alVer, quieto };
