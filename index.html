@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@1&display=swap">
-<link rel="stylesheet" href="estilos.css">
+<link rel="stylesheet" href="estilos.css?v=4">
 <script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">
 {
@@ -60,7 +60,22 @@
 
 <!-- ───────────── MENÚ ───────────── -->
 <div class="barra" id="barra">
+  <svg class="vidrio-filtro" aria-hidden="true" focusable="false">
+    <filter id="vidrio" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+      <feImage id="vidrio-mapa" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="mapa"/>
+      <feDisplacementMap in="SourceGraphic" in2="mapa" scale="-150" xChannelSelector="R" yChannelSelector="G" result="dr"/>
+      <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="mapa" scale="-140" xChannelSelector="R" yChannelSelector="G" result="dg"/>
+      <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+      <feDisplacementMap in="SourceGraphic" in2="mapa" scale="-130" xChannelSelector="R" yChannelSelector="G" result="db"/>
+      <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+      <feBlend in="r" in2="g" mode="screen" result="rg"/>
+      <feBlend in="rg" in2="b" mode="screen" result="salida"/>
+      <feGaussianBlur in="salida" stdDeviation="0.6"/>
+    </filter>
+  </svg>
   <nav class="nav appear appear--down" style="--d:.05s" aria-label="Principal">
+    <span class="nav__brillo" aria-hidden="true"></span>
     <a class="marca" href="#inicio" aria-label="Botix, inicio"><span class="marca__luz" aria-hidden="true"></span>Botix</a>
     <div class="nav__enlaces" id="nav-enlaces">
       <span class="nav__pastilla" aria-hidden="true"></span>
@@ -117,13 +132,41 @@
 </header>
 
 <main>
-  <!-- ───────────── CINTA ───────────── -->
-  <div class="cinta" aria-hidden="true">
-    <div class="cinta__pista">
-      <span>WhatsApp</span><i></i><span>Instagram</span><i></i><span>Telegram</span><i></i><span>Tu web</span><i></i>
-      <span>WhatsApp</span><i></i><span>Instagram</span><i></i><span>Telegram</span><i></i><span>Tu web</span><i></i>
+  <!-- ───────────── CANALES ───────────── -->
+  <section class="canales" aria-labelledby="canales-titulo">
+    <div class="cabecera" data-reveal>
+      <p class="rotulo">// Un asistente, cuatro puertas</p>
+      <h2 id="canales-titulo">Te escriben por donde quieren.<br> <em>Contesta en todas.</em></h2>
     </div>
-  </div>
+    <div class="hub" data-hub data-reveal>
+      <svg class="hub__haces" aria-hidden="true"></svg>
+      <ul class="hub__canales" aria-label="Canales que atiende">
+        <li data-canal="whatsapp"><span class="hub__ico"><svg viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.3 20.7l4.4-1.1A8.8 8.8 0 1 0 12 3.2z"/><path d="M9.2 8.6c.3-.6.6-.6.9-.6h.6c.2 0 .4.1.5.4l.7 1.7c.1.2 0 .5-.1.6l-.5.6c-.1.1-.2.3 0 .5.4.8 1.2 1.6 2 2 .2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.8c.3.1.4.3.4.5 0 .5-.2 1.2-.7 1.5-.6.4-1.6.6-3-.1-1.6-.8-3-2.2-3.7-3.8-.6-1.3-.4-2.3.1-2.9z" class="relleno"/></svg></span><b>WhatsApp</b><small><span data-cuenta>12</span> hoy</small></li>
+        <li data-canal="instagram"><span class="hub__ico"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" class="relleno"/></svg></span><b>Instagram</b><small><span data-cuenta>7</span> hoy</small></li>
+        <li data-canal="telegram"><span class="hub__ico"><svg viewBox="0 0 24 24"><path d="M20.5 4.2 3.6 10.8c-.9.4-.9 1 0 1.3l4.2 1.3 1.6 5c.2.6.4.7.9.3l2.4-2.1 4.4 3.3c.8.4 1.3.2 1.5-.7l2.9-13.6c.3-1.2-.4-1.7-1-1.4z"/><path d="m8 13.4 9.4-6"/></svg></span><b>Telegram</b><small><span data-cuenta>4</span> hoy</small></li>
+        <li data-canal="web"><span class="hub__ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.6 5.2 3.6 8.5s-1.2 6.1-3.6 8.5c-2.4-2.4-3.6-5.2-3.6-8.5s1.2-6.1 3.6-8.5z"/></svg></span><b>Tu web</b><small><span data-cuenta>9</span> hoy</small></li>
+      </ul>
+      <div class="hub__nucleo" aria-hidden="true">
+        <span class="hub__onda"></span><span class="hub__onda"></span>
+        <span class="hub__anillo"></span>
+        <span class="hub__placa"><svg viewBox="0 0 96 96"><path d="M33 24V72M33 24H52.5a12 12 0 0 1 0 24H33M33 48H55.5a12 12 0 0 1 0 24H33"/></svg></span>
+        <span class="hub__estado">Bix · <em>en línea</em></span>
+      </div>
+      <div class="hub__bandeja">
+        <div class="hub__cab"><b>Bandeja</b><span class="hub__vivo"><i></i>En directo</span></div>
+        <ol class="hub__lista" aria-label="Ejemplo de mensajes que entran y contesta Bix">
+          <li class="msg" data-canal="whatsapp"><span class="msg__av">L</span><div><p class="msg__de"><b>Lucía</b><span class="msg__tag">WhatsApp</span></p><p class="msg__txt">¿Tenéis hueco mañana para mechas?</p><p class="msg__ok msg__ok--cita">Cita: mañana a las 11:00</p></div></li>
+          <li class="msg" data-canal="instagram"><span class="msg__av">M</span><div><p class="msg__de"><b>@marcos.fit</b><span class="msg__tag">Instagram</span></p><p class="msg__txt">¿Cuánto cuesta la cuota?</p><p class="msg__ok">Contestado · 39 €/mes</p></div></li>
+          <li class="msg" data-canal="telegram"><span class="msg__av">A</span><div><p class="msg__de"><b>Ana</b><span class="msg__tag">Telegram</span></p><p class="msg__txt">¿Abrís el sábado?</p><p class="msg__ok">Contestado · de 10:00 a 14:00</p></div></li>
+        </ol>
+        <dl class="hub__pie">
+          <div><dt>Respuesta media</dt><dd>2 s</dd></div>
+          <div><dt>Citas hoy</dt><dd data-citas>14</dd></div>
+          <div><dt>Sin contestar</dt><dd>0</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
 
   <!-- ───────────── SERVICIOS ───────────── -->
   <section class="servicios" id="servicios" aria-labelledby="servicios-titulo">
@@ -408,9 +451,10 @@
   </form>
 </section>
 
-<script src="efectos.js" defer></script>
-<script src="maquetas.js" defer></script>
-<script src="web.js" defer></script>
-<script src="bix.js" defer></script>
+<script src="efectos.js?v=4" defer></script>
+<script src="maquetas.js?v=4" defer></script>
+<script src="canales.js?v=4" defer></script>
+<script src="web.js?v=4" defer></script>
+<script src="bix.js?v=4" defer></script>
 </body>
 </html>
