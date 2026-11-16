@@ -1,114 +1,65 @@
-// Movimiento de la página: la esfera de luz del héroe, entradas, tarjetas que
+// Movimiento de la página: el menú que va y viene, entradas, tarjetas que
 // se apilan y el manifiesto que se lee al ritmo del scroll. Todo respeta
 // «reducir movimiento» y, si algo falla, el contenido queda visible igualmente.
 (() => {
   const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ── La esfera de luz del héroe, dibujada aquí mismo (sin vídeos ni imágenes)
-  function esferaDeLuz(lienzo) {
-    const ctx = lienzo.getContext('2d');
-    if (!ctx) return;
-    let w = 0, h = 0, dpr = 1, enPantalla = true, ultimo = 0;
-    const motas = Array.from({ length: 70 }, () => ({
-      x: Math.random(), y: Math.random(), r: Math.random() * 1.3 + 0.3,
-      v: Math.random() * 0.012 + 0.004, a: Math.random() * 0.35 + 0.08, f: Math.random() * 6.28,
-    }));
-    function medir() {
-      dpr = Math.min(devicePixelRatio || 1, 1.5);
-      w = lienzo.clientWidth; h = lienzo.clientHeight;
-      lienzo.width = Math.round(w * dpr); lienzo.height = Math.round(h * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // ── Menú fijo: se esconde al bajar, vuelve al subir y marca la sección
+  const barra = document.getElementById('barra');
+  const enlaces = [...document.querySelectorAll('.nav__enlaces a')];
+  const pastilla = document.querySelector('.nav__pastilla');
+  const botonMenu = document.getElementById('nav-menu');
+  const secciones = enlaces.map((a) => document.querySelector(a.getAttribute('href')));
+  let yAntes = Math.max(0, scrollY), tramo = 0, activo = null, encima = null;
+  const colocar = () => {
+    const a = encima || activo;
+    pastilla.classList.toggle('ver', !!a);
+    if (!a) return;
+    pastilla.style.setProperty('--x', `${a.offsetLeft}px`);
+    pastilla.style.setProperty('--w', `${a.offsetWidth}px`);
+  };
+  const abrirMenu = (si) => {
+    barra.classList.toggle('abierta', si);
+    botonMenu.setAttribute('aria-expanded', String(si));
+    botonMenu.setAttribute('aria-label', si ? 'Cerrar el menú' : 'Abrir el menú');
+  };
+  function menu() {
+    const y = Math.max(0, scrollY);
+    const dy = y - yAntes; yAntes = y;
+    barra.classList.toggle('compacta', y > 40);
+    barra.style.setProperty('--p', Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight)).toFixed(4));
+    if (y < 140 || barra.classList.contains('abierta') || barra.contains(document.activeElement)) { barra.classList.remove('oculta'); tramo = 0; }
+    else if (dy) {
+      tramo = Math.sign(dy) === Math.sign(tramo) ? tramo + dy : dy;
+      if (tramo > 56) barra.classList.add('oculta');
+      else if (tramo < -10) barra.classList.remove('oculta');
     }
-    // Un haz de luz: una elipse muy alargada con degradado radial
-    function haz(cx, cy, ang, largo, grosor, color, alfa) {
-      ctx.save();
-      ctx.translate(cx, cy); ctx.rotate(ang); ctx.scale(1, grosor / largo);
-      const g = ctx.createRadialGradient(0, 0, 0, 0, 0, largo / 2);
-      g.addColorStop(0, `rgba(${color},${alfa})`);
-      g.addColorStop(0.35, `rgba(${color},${alfa * 0.45})`);
-      g.addColorStop(1, `rgba(${color},0)`);
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(0, 0, largo / 2, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
+    let nuevo = null;
+    secciones.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.45) nuevo = enlaces[i]; });
+    const ultima = secciones[secciones.length - 1];
+    if (ultima && ultima.getBoundingClientRect().bottom < innerHeight * 0.3) nuevo = null;
+    if (nuevo !== activo) {
+      activo?.classList.remove('activo'); activo?.removeAttribute('aria-current');
+      activo = nuevo;
+      activo?.classList.add('activo'); activo?.setAttribute('aria-current', 'true');
+      colocar();
     }
-    function pintar(ms) {
-      const t = ms / 1000;
-      const movil = w < 760;
-      const cx = w * (movil ? 0.76 : 0.74), cy = h * (movil ? 0.28 : 0.4);
-      const R = movil ? Math.min(w * 0.3, 130) : Math.min(h * 0.19, w * 0.125);
-      const deriva = Math.sin(t * 0.25) * 0.035;
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = '#05090a'; ctx.fillRect(0, 0, w, h);
-
-      // Halo de fondo y haces que atraviesan la esfera
-      ctx.globalCompositeOperation = 'lighter';
-      haz(cx, cy, 0, R * 7, R * 7, '20,60,90', 0.22);
-      const L = Math.max(w, h) * 1.25;
-      haz(cx, cy, -0.5 + deriva, L, R * 0.9, '255,140,40', 0.38);
-      haz(cx, cy, -0.5 + deriva, L * 0.8, R * 0.22, '255,200,120', 0.55);
-      haz(cx, cy, -0.3 - deriva, L * 0.9, R * 1.1, '40,110,200', 0.3);
-      haz(cx, cy, -0.3 - deriva, L * 0.6, R * 0.25, '120,190,255', 0.4);
-      haz(cx, cy, 0, R * 3.2, R * 3.2, '255,170,70', 0.12);
-
-      // La esfera: cuerpo de cristal, remolino interior, borde y brillo
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.save();
-      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.clip();
-      const cuerpo = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.1, cx, cy, R);
-      cuerpo.addColorStop(0, 'rgba(225,238,255,0.55)');
-      cuerpo.addColorStop(0.45, 'rgba(70,120,190,0.5)');
-      cuerpo.addColorStop(0.85, 'rgba(20,40,70,0.7)');
-      cuerpo.addColorStop(1, 'rgba(120,160,210,0.55)');
-      ctx.fillStyle = cuerpo; ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
-      ctx.globalCompositeOperation = 'lighter';
-      for (let i = 0; i < 3; i++) {
-        const a = t * (0.22 + i * 0.07) + i * 2.1;
-        haz(cx + Math.cos(a) * R * 0.25, cy + Math.sin(a * 1.3) * R * 0.2, a * 0.6 - 0.4, R * 2.2, R * 0.5,
-          i === 1 ? '90,160,255' : '255,150,50', i === 1 ? 0.85 : 0.9);
-      }
-      haz(cx + R * 0.15, cy + R * 0.3, -0.5 + deriva, R * 2, R * 0.35, '255,220,160', 0.6);
-      haz(cx, cy + R * 0.55, 0, R * 1.6, R * 0.7, '255,190,110', 0.45);
-      ctx.restore();
-
-      ctx.globalCompositeOperation = 'source-over';
-      const borde = ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
-      borde.addColorStop(0, 'rgba(255,255,255,0.75)');
-      borde.addColorStop(0.45, 'rgba(255,255,255,0.08)');
-      borde.addColorStop(0.8, 'rgba(255,190,110,0.35)');
-      borde.addColorStop(1, 'rgba(255,220,170,0.6)');
-      ctx.strokeStyle = borde; ctx.lineWidth = 1.6;
-      ctx.beginPath(); ctx.arc(cx, cy, R - 0.8, 0, Math.PI * 2); ctx.stroke();
-      ctx.save();
-      ctx.translate(cx - R * 0.42, cy - R * 0.48); ctx.rotate(-0.7); ctx.scale(1, 0.45);
-      const brillo = ctx.createRadialGradient(0, 0, 0, 0, 0, R * 0.32);
-      brillo.addColorStop(0, 'rgba(255,255,255,0.55)'); brillo.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = brillo; ctx.beginPath(); ctx.arc(0, 0, R * 0.32, 0, Math.PI * 2); ctx.fill();
-      ctx.restore();
-
-      // Motas de polvo en suspensión
-      ctx.globalCompositeOperation = 'lighter';
-      for (const m of motas) {
-        const y = ((m.y - t * m.v) % 1 + 1) % 1;
-        const x = m.x + Math.sin(t * 0.3 + m.f) * 0.01;
-        ctx.fillStyle = `rgba(255,214,160,${m.a * (0.6 + 0.4 * Math.sin(t + m.f))})`;
-        ctx.beginPath(); ctx.arc(x * w, y * h, m.r, 0, Math.PI * 2); ctx.fill();
-      }
-      ctx.globalCompositeOperation = 'source-over';
-    }
-    function bucle(ms) {
-      if (enPantalla && ms - ultimo > 32) { ultimo = ms; pintar(ms); }
-      requestAnimationFrame(bucle);
-    }
-    medir();
-    addEventListener('resize', () => { medir(); pintar(performance.now()); });
-    pintar(quieto ? 4000 : performance.now());
-    requestAnimationFrame(() => requestAnimationFrame(() => lienzo.classList.add('is-ready')));
-    if (quieto) return;
-    new IntersectionObserver(([e]) => { enPantalla = e.isIntersecting; }).observe(lienzo);
-    requestAnimationFrame(bucle);
   }
-  const lienzo = document.querySelector('.heroe__lienzo');
-  if (lienzo) esferaDeLuz(lienzo);
+  if (barra) {
+    enlaces.forEach((a) => {
+      a.addEventListener('pointerenter', () => { encima = a; colocar(); });
+      a.addEventListener('click', () => abrirMenu(false));
+    });
+    document.querySelector('.nav__enlaces').addEventListener('pointerleave', () => { encima = null; colocar(); });
+    barra.addEventListener('focusin', () => barra.classList.remove('oculta'));
+    botonMenu.addEventListener('click', () => abrirMenu(!barra.classList.contains('abierta')));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape' && barra.classList.contains('abierta')) { abrirMenu(false); botonMenu.focus(); } });
+    document.addEventListener('click', (e) => { if (!barra.contains(e.target)) abrirMenu(false); });
+    addEventListener('scroll', menu, { passive: true });
+    addEventListener('resize', () => { menu(); colocar(); });
+    document.fonts?.ready.then(colocar);
+    menu();
+  }
 
   // ── Entradas del héroe a prueba de fallos
   const entradas = document.querySelectorAll('.appear');
