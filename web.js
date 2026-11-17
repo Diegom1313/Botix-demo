@@ -165,7 +165,7 @@
   // ── La firma: el campo del héroe cambia de pregunta de ejemplo
   const campo = document.getElementById('pregunta-texto');
   const ejemplos = [
-    'Pregúntale a Bix: ¿cuánto cuesta?',
+    'Pregúntale a Botix: ¿cuánto cuesta?',
     '¿Funciona con WhatsApp?',
     '¿Me hacéis la web?',
     '¿Hay permanencia?',
@@ -180,25 +180,36 @@
     }, 3200);
   }
 
-  // ── El botón flotante de Bix sobra mientras se ve el héroe, que ya tiene su campo
+  // ── El botón flotante de Botix sobra mientras se ve el héroe, que ya tiene su campo
   const lanzador = document.getElementById('bix-lanzador');
   const heroe = document.querySelector('.heroe');
   if (lanzador && heroe) {
     lanzador.classList.add('oculto');
-    new IntersectionObserver(([e]) => lanzador.classList.toggle('oculto', e.isIntersecting), { threshold: 0.35 }).observe(heroe);
+    const visibles = new Set();
+    const observador = new IntersectionObserver((entradas) => {
+      for (const e of entradas) {
+        const visible = e.target === heroe ? e.intersectionRatio >= 0.35 : e.isIntersecting;
+        if (visible) visibles.add(e.target); else visibles.delete(e.target);
+      }
+      lanzador.classList.toggle('oculto', visibles.size > 0);
+    }, { threshold: [0, 0.01, 0.35] });
+    observador.observe(heroe);
+    const compra = document.getElementById('comprar');
+    if (compra) observador.observe(compra);
   }
 
-  // ── Todo lo que abre a Bix
-  const conBix = (fn) => { if (window.Bix) fn(window.Bix); };
+  // ── Todo lo que abre a Botix
+  const conBotix = (fn) => { if (window.Botix) fn(window.Botix); };
   document.getElementById('pregunta-heroe')?.addEventListener('submit', (e) => {
     e.preventDefault();
     const t = campo.value.trim();
     campo.value = '';
-    conBix((b) => (t ? b.preguntar(t) : b.abrir()));
+    conBotix((b) => (t ? b.preguntar(t) : b.abrir()));
   });
   document.addEventListener('click', (e) => {
     const p = e.target.closest('[data-preguntar]');
-    if (p) { conBix((b) => b.preguntar(p.dataset.preguntar)); return; }
-    if (e.target.closest('[data-abrir-bix]')) conBix((b) => b.abrir());
+    if (p) { conBotix((b) => b.preguntar(p.dataset.preguntar)); return; }
+    if (e.target.closest('[data-abrir-bix]')) conBotix((b) => b.abrir());
   });
 })();
+
