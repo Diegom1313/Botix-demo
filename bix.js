@@ -1,10 +1,10 @@
-// Bix: el asistente de la web de Botix. Sabe a fondo lo que vende Botix y
+// Botix: el asistente de la web de Botix. Sabe a fondo lo que vende Botix y
 // puede simular cómo atiende el asistente de un negocio. Funciona solo en el
 // navegador: no guarda ni envía nada de lo que se escribe.
 (() => {
-  // Rellena esto si quieres que Bix enlace al alta o dé un contacto real.
+  // Rellena esto si quieres que Botix enlace al alta o dé un contacto real.
   const CONFIG = {
-    alta: '',      // p. ej. 'https://citas.tudominio.com/crear.html'
+    alta: 'https://app.botix.software/crear.html',
     contacto: '',  // p. ej. 'hola@tudominio.com'
   };
 
@@ -37,7 +37,7 @@
     return claves.some((c) => puntos(texto, ps, c) > 0);
   };
 
-  // ─────────────────────────────── lo que sabe Bix
+  // ─────────────────────────────── lo que sabe Botix
   const PRECIOS = {
     asistente: 'El **asistente de citas** cuesta **299 €** de alta, una sola vez, y **29 €/mes** de mantenimiento.\n\nEl alta cubre dejarlo montado para tu negocio: tu sector, tus datos, tu panel y el chat para tu web. La cuota cubre que siga encendido día y noche, con copia diaria, actualizaciones, recordatorios y soporte de una persona.\n\nSin IVA y sin permanencia.',
     web: 'La **web profesional** cuesta **99 €** de diseño y puesta en marcha, una vez, y **15 €/mes** de alojamiento y mantenimiento.\n\nSolo pagas los extras que uses:\n• Dominio propio: **19 €** una vez\n• Traslado desde tu web anterior, sin perder lo que Google ya conoce: **29 €** una vez\n• Página propia para cada servicio: **9 €** cada una\n\nSin IVA y sin permanencia. Lo que ya has pagado no se vuelve a cobrar aunque lo quites y lo vuelvas a poner.',
@@ -56,10 +56,10 @@
   const INTENCIONES = [
     { id: 'simular', claves: ['simula*', 'ensena*', 'ver una reserva', 'reserva en vivo', 'como reserva', 'simular una reserva', 'hacer una reserva', 'probar una reserva', 'como reservaria', 'prueba de reserva', 'ponme a prueba'] },
     { id: 'saludo', claves: ['hola', 'buenas', 'buenos dias', 'buenas tardes', 'buenas noches', 'hey', 'que tal', 'saludos'],
-      r: '¡Hola! Soy **Bix**, el asistente de Botix. Pregúntame lo que quieras sobre lo que vendemos: el asistente de citas, las webs, la auditoría SEO o los cobros.',
+      r: '¡Hola! Soy **Botix**, el asistente de Botix. Pregúntame lo que quieras sobre lo que vendemos: el asistente de citas, las webs, la auditoría SEO o los cobros.',
       op: ['¿Qué es Botix?', '¿Cuánto cuesta?', 'Simular una reserva'] },
-    { id: 'quien', claves: ['quien eres', 'eres un bot', 'eres un robot', 'eres una ia', 'eres una maquina', 'eres humano', 'eres una persona', 'eres real', 'como te llamas', 'bix'],
-      r: 'Soy **Bix**, un asistente virtual. Me han hecho para contarte a fondo todo lo que vende Botix.\n\nFunciono solo en tu navegador: no guardo ni envío lo que escribes. El asistente que montamos para tu negocio es igual de rápido, pero conectado a tu agenda de verdad.',
+    { id: 'quien', claves: ['quien eres', 'eres un bot', 'eres un robot', 'eres una ia', 'eres una maquina', 'eres humano', 'eres una persona', 'eres real', 'como te llamas', 'botix'],
+      r: 'Soy **Botix**, un asistente virtual. Me han hecho para contarte a fondo todo lo que vende Botix.\n\nFunciono solo en tu navegador: no guardo ni envío lo que escribes. El asistente que montamos para tu negocio es igual de rápido, pero conectado a tu agenda de verdad.',
       op: ['¿Qué es Botix?', 'Simular una reserva'] },
     { id: 'que_es', claves: ['que es', 'que haceis', 'que hace', 'que hacen', 'que vendeis', 'que ofreceis', 'en que consiste', 'para que sirve', 'que es botix', 'servicios', 'productos', 'exactamente'],
       r: 'Botix es un **asistente para negocios que trabajan con cita**. Atiende a tus clientes por **WhatsApp, Instagram, Telegram y tu web**, da citas de verdad en tu agenda, les recuerda la cita la tarde antes y te pasa lo que no sabe.\n\nAdemás vendemos tres cosas que se manejan desde el mismo panel:\n• **Tu web profesional**, diseñada y alojada por nosotros\n• **Auditoría SEO y SEM gratis**, con informe en PDF\n• **Cobro de señales** al reservar, con tu propia cuenta de Stripe',
@@ -205,7 +205,7 @@
   };
 
   // ─────────────────────────────── interfaz
-  const panel = document.getElementById('bix');
+  const panel = document.getElementById('botix');
   const lanzador = document.getElementById('bix-lanzador');
   const lista = document.getElementById('bix-mensajes');
   const opciones = document.getElementById('bix-opciones');
@@ -260,8 +260,8 @@
     lista.replaceChildren();
     tema = null; sim = null; cola = Promise.resolve();
     iniciado = true;
-    if (rapido) { pintar('¡Hola! Soy **Bix**, el asistente de Botix.', 'msj--bot'); return; }
-    decir('¡Hola! Soy **Bix**, el asistente de Botix. Pregúntame lo que quieras sobre lo que vendemos: el asistente de citas, las webs, la auditoría SEO o los cobros.',
+    if (rapido) { pintar('¡Hola! Soy **Botix**, el asistente de Botix.', 'msj--bot'); return; }
+    decir('¡Hola! Soy **Botix**, el asistente de Botix. Pregúntame lo que quieras sobre lo que vendemos: el asistente de citas, las webs, la auditoría SEO o los cobros.',
       ['¿Qué es Botix?', '¿Cuánto cuesta?', 'Simular una reserva', '¿Me hacéis la web?']);
   }
 
@@ -397,8 +397,9 @@ Llega con los servicios, los precios orientativos, el horario típico y las preg
   form.addEventListener('submit', (e) => { e.preventDefault(); enviar(entrada.value); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) cerrar(); });
 
-  window.Bix = {
+  window.Botix = {
     abrir: () => abrir(),
     preguntar(texto) { abrir({ saludo: false }); enviar(texto); },
   };
 })();
+
