@@ -205,7 +205,7 @@
   };
 
   // ─────────────────────────────── interfaz
-  const panel = document.getElementById('botix');
+  const panel = document.getElementById('bix');
   const lanzador = document.getElementById('bix-lanzador');
   const lista = document.getElementById('bix-mensajes');
   const opciones = document.getElementById('bix-opciones');
